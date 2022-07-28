@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Image Server</title>
+</head>
+
+<script>
+</script>
+
+<style>
+	* {
+		font-family:  Courier;
+	}
+	h1 {
+		font-size:  3em;
+	}
+	h2 {
+		font-size: 2.5em;
+	}
+	button {
+		color: whitesmoke;
+		font-size: 2em;
+	}
+
+</style>
+
+<body>
+	<h1>Image Server</h1>
+	<form action="/upload" method="post" enctype="multipart/form-data">
+		<h2>Upload an Image:</h2> 
+		<input type="file" accept='image/*' name="upload" />
+		<input type="submit" value="Upload Image" />
+	</form>
+</body>
+
+
+</html>

@@ -34,10 +34,13 @@ def upload():
 
 @app.route("/clear")
 def clear():
-	for file in os.listdir('./results'):
-		os.remove(os.path.join('./results',file))
-	nl = '\n'
-	return f'<script>{nl}alert("Cleared Results");{nl}window.location.href="/";{nl}</script>'
+	try:
+		for file in os.listdir('./results'):
+			os.remove(os.path.join('./results',file))
+		nl = '\n'
+		return f'<script>{nl}alert("Cleared Results");{nl}window.location.href="/";{nl}</script>'
+	except FileNotFoundError:
+		return 'No Results'
 		
 @app.route("/results/<name>")
 def results(name):

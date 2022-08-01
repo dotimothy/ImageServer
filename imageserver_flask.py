@@ -22,19 +22,40 @@ def upload():
 			return render_template('noimage.html')
 		path = f'./results/{name}'
 		image.save(path)
-		return redirect(url_for('uploaded',resultname=name,path=path))
+		nl = '\n'
+		html = f"<h1 style='font-family:Courier'>Your Uploaded Image ({name})</h1>{nl}<br>{nl}" 
+		html = html + f"<a href={path}><img width='50%' src={path} title={name}/></a>"
+		html = html + f"<h1 style='font-family:Courier'><a href='/'>Return to Homepage</a></h1>{nl}"
+		return html
 	else:
-		return render_template('index.html')
+		return redirect(url_for('home'))
+
+@app.route("/clear")
+def clear():
+	for file in os.listdir('./results'):
+		os.remove(os.path.join('./results',file))
+	nl = '\n'
+	return f'<script>{nl}alert("Cleared Results");{nl}window.location.href="/";{nl}</script>'
 		
-@app.route("/uploaded")
-def uploaded(resultname,path):
-	return render_template('uploaded.html',resultname=resultname,path=path) 
-
-
 @app.route("/results/<name>")
 def results(name):
 	path = f'./results/{name}' 
 	return send_file(path,mimetype='image/gif')
+
+@app.route("/collage")
+def collage():
+	images = os.listdir('./results')
+	if not images:
+		nl = '\n'
+		return f'<script>{nl}alert("No Results.");{nl}window.location.href="/";{nl}</script>'
+	html = "<h1 style='font-family:Courier'>Collage of Results:</h1>\n<br>"
+	for image in os.listdir('./results'):
+		path = os.path.join('./results',image)
+		nl = '\n'
+		html = html + f"<a href={path}><img title={image} src={path} width='10%'/></a>{nl}"
+	html = html + "<h1 style='font-family:Courier'><a href='/'>Return to Homepage</a></h1>\n"
+	return html
+
 
 # Debug if the same file as run
 if __name__ == "__main__":

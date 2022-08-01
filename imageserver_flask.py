@@ -1,7 +1,8 @@
 # Image Server Implemented in Python Flask
 
 # Libraries 
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, redirect, url_for, render_template, request, send_file
+import os
 
 
 # Creating the app 
@@ -16,20 +17,25 @@ def home():
 def upload():
 	if request.method == "POST": 
 		image = request.files['upload']
-		if not image:
+		name = request.form['filename']
+		if not image or not name:
 			return render_template('noimage.html')
-		path = './images/result.jpg'
+		path = f'./results/{name}'
 		image.save(path)
-		return render_template('uploaded.html')
+		return redirect(url_for('uploaded',resultname=name,path=path))
 	else:
-		return render_template('index.html') 
+		return render_template('index.html')
+		
+@app.route("/uploaded")
+def uploaded(resultname,path):
+	return render_template('uploaded.html',resultname=resultname,path=path) 
 
-@app.route("/result")
-def result():
-	path = 'images/result.jpg'
-	return f'<img src={path}/>'
 
+@app.route("/results/<name>")
+def results(name):
+	path = f'./results/{name}' 
+	return send_file(path,mimetype='image/gif')
 
 # Debug if the same file as run
 if __name__ == "__main__":
-	app.run(debug=False,host='0.0.0.0',port=80)
+	app.run(debug=True,host='0.0.0.0',port=80)

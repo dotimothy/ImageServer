@@ -1,2 +1,2 @@
 # ImageServer
- An Image Uploading Server Implemented in Python Flask
+ A Basic Image Uploading Server Implemented in Python Flask

@@ -20,6 +20,8 @@ def upload():
 		name = request.form['filename']
 		if not image or not name:
 			return render_template('noimage.html')
+		if(not os.path.exists(os.getcwd() + '\\results')):
+			os.makedirs(os.getcwd() + '\\results')
 		path = f'./results/{name}'
 		image.save(path)
 		nl = '\n'

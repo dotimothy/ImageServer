@@ -61,4 +61,5 @@ def collage():
 
 # Debug if the same file as run
 if __name__ == "__main__":
+	clear()
 	app.run(debug=True,host='0.0.0.0',port=80)

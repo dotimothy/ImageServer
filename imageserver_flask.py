@@ -22,11 +22,13 @@ def upload():
 			return render_template('noimage.html')
 		if(not os.path.exists(os.getcwd() + '\\results')):
 			os.makedirs(os.getcwd() + '\\results')
+		name = name.replace(' ','_')
 		path = f'./results/{name}'
 		image.save(path)
+		isVideo = name.endswith('.mp4') or name.endswith('.mkv') or name.endswith('.avi')
 		nl = '\n'
-		html = f"<h1 style='font-family:Courier'>Your Uploaded Image ({name})</h1>{nl}<br>{nl}" 
-		html = html + f"<a href={path}><img width='50%' src={path} title={name}/></a>"
+		html = f"<h1 style='font-family:Courier'>Your Uploaded Video ({name})</h1>{nl}<br>{nl}" if isVideo else f"<h1 style='font-family:Courier'>Your Uploaded Image ({name})</h1>{nl}<br>{nl}" 
+		html = html + (f"<a href={path}><video controls autoplay width='50%' title={name}/><source src={path}></video></a>" if isVideo else f"<a href={path}><img width='50%' src={path} title={name}/></a>")
 		html = html + f"<h1 style='font-family:Courier'><a href='/'>Return to Homepage</a></h1>{nl}"
 		return html
 	else:
@@ -56,8 +58,9 @@ def collage():
 	html = "<h1 style='font-family:Courier'>Collage of Results:</h1>\n<br>"
 	for image in os.listdir('./results'):
 		path = os.path.join('./results',image)
+		isVideo = path.endswith('.mp4') or path.endswith('.mkv') or patj.endswith('.avi')
 		nl = '\n'
-		html = html + f"<a href={path}><img title={image} src={path} width='10%'/></a>{nl}"
+		html = html +  (f"<a href={path}><video controls autoplay width='10%' title={path}/><source src={path}></video></a>" if isVideo else f"<a href={path}><img width='50%' src={path} title={name}/></a>")
 	html = html + "<h1 style='font-family:Courier'><a href='/'>Return to Homepage</a></h1>\n"
 	return html
 

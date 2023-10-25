@@ -58,9 +58,9 @@ def collage():
 	html = "<h1 style='font-family:Courier'>Collage of Results:</h1>\n<br>"
 	for image in os.listdir('./results'):
 		path = os.path.join('./results',image)
-		isVideo = path.endswith('.mp4') or path.endswith('.mkv') or patj.endswith('.avi')
+		isVideo = path.endswith('.mp4') or path.endswith('.mkv') or path.endswith('.avi')
 		nl = '\n'
-		html = html +  (f"<a href={path}><video controls autoplay width='10%' title={path}/><source src={path}></video></a>" if isVideo else f"<a href={path}><img width='50%' src={path} title={name}/></a>")
+		html = html +  (f"<a href={path}><video controls autoplay width='10%' title={path}/><source src={path}></video></a>" if isVideo else f"<a href={path}><img width='50%' src={path} title={path}/></a>")
 	html = html + "<h1 style='font-family:Courier'><a href='/'>Return to Homepage</a></h1>\n"
 	return html
 
